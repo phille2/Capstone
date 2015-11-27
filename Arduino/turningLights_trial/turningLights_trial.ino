@@ -30,14 +30,14 @@ void loop() {
     }else {
       digitalWrite(13,LOW);
     }
-  if (buttonStateRight != 0){
+  /*if (buttonStateRight != 0){
       digitalWrite(12,HIGH);
       delay(1000);
       digitalWrite(12,LOW);
       delay(1000);
     }else {
       digitalWrite(12,LOW);
-    }
+    }*/
   delay(1);        // delay in between reads for stability
 }
 
