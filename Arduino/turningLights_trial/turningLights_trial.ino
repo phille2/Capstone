@@ -1,6 +1,8 @@
 
 // digital pin 2 has a pushbutton attached to it.
 int pushButton = 2;
+int pushButtonLeft = 2;
+int buttonPushed = 0;
 
 // the setup routine :
 void setup() {
@@ -20,13 +22,23 @@ void loop() {
   int buttonStateLeft = digitalRead(pushButtonLeft);
 //  int buttonStateRight = digitalRead(pushButtonRight);
   // print out the state of the button:
-  Serial.println(buttonStateLeft);
+  Serial.println(buttonStateLeft);//set button to pushed
+  if (buttonStateLeft !=0){
+    buttonPushed = 1;
+    delay(10);
+  }
+  Serial.println(buttonPushed);
   //Serial.println(buttonStateRight); //check if we put in two inputs into one Serial Port
-  if (buttonStateLeft != 0){
-      digitalWrite(13,HIGH);
-      delay(1000);
+  if (buttonPushed == 1){
       digitalWrite(13,LOW);
-      delay(1000);
+      delay(500);
+      digitalWrite(13,HIGH);
+      delay(500);
+      int buttonStateLeft = digitalRead(pushButtonLeft);
+      Serial.println(buttonStateLeft);
+      if (buttonStateLeft !=0){
+        buttonPushed = 0;
+      }
     }else {
       digitalWrite(13,LOW);
     }
