@@ -29,6 +29,9 @@ bool msgReq() {
     digitalWrite(LED, HIGH);
     return true;
   }
+  else {
+    return false;
+  }
 }
 void msgSend(bool request) {
   if (request) {
