@@ -1,3 +1,6 @@
+#include <Time.h>
+#include <TimeLib.h>
+
 //Eric Phillips-Sheldon
 //January 2016
 //Bluetooth send and receive code
@@ -5,6 +8,9 @@
 int counter = 0;
 int LED = 13;
 char INBYTE;
+time_t oldTime = now();
+time_t newTime = now();
+time_t elapseTime;
 
 void setup() {
   // put your setup code here, to run once:
@@ -35,10 +41,15 @@ bool msgReq() {
 }
 void msgSend(bool request) {
   if (request) {
-  counter++;
-  Serial.print("This is message ");
-  Serial.println(counter);
-  delay(500);
+    newTime=now();
+    elapseTime= newTime-oldTime;
+    counter++;
+    oldTime=now();
+    Serial.print("Time since last request:  ");
+    Serial.println(elapseTime);
+    Serial.print("\nRequest number: ");
+    Serial.println(counter);
+    delay(500);
   }
   request=false; //reset request to false
 }
