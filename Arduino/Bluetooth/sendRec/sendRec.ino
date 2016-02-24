@@ -1,5 +1,5 @@
-#include <Time.h>
-#include <TimeLib.h>
+//#include <Time.h>
+//#include <TimeLib.h>
 
 //Eric Phillips-Sheldon
 //January 2016
@@ -8,9 +8,12 @@
 int counter = 0;
 int LED = 13;
 char INBYTE;
-time_t oldTime = now();
-time_t newTime = now();
-time_t elapseTime;
+//time_t oldTime = now();
+//time_t newTime = now();
+//time_t elapseTime;
+unsigned long oldTime = millis();
+unsigned long newTime= millis();
+unsigned long elapseTime;
 
 void setup() {
   // put your setup code here, to run once:
@@ -41,13 +44,15 @@ bool msgReq() {
 }
 void msgSend(bool request) {
   if (request) {
-    newTime=now();
+    //newTime=now();
+    newTime= millis();
     elapseTime= newTime-oldTime;
     counter++;
-    oldTime=now();
+    //oldTime=now();
+    oldTime=millis();
     Serial.print("Time since last request:  ");
     Serial.println(elapseTime);
-    Serial.print("\nRequest number: ");
+    Serial.print("Request number: ");
     Serial.println(counter);
     delay(500);
   }
