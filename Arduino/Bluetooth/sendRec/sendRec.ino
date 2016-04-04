@@ -6,7 +6,7 @@
 //Bluetooth send and receive code
 
 int counter = 0;
-int LED = 13;
+int LED = 11;
 char INBYTE;
 //time_t oldTime = now();
 //time_t newTime = now();
