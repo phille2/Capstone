@@ -18,6 +18,7 @@ char INBYTE;
 unsigned long oldTime = millis();
 unsigned long newTime= millis();
 unsigned long elapseTime;
+int sendrev=0;
 //////Hall Effect Sensor///////
 int rev;
 int old_rev;
@@ -125,16 +126,23 @@ bool msgReq() {
 }
 void msgSend(bool request) {
   if (request) {
-    //newTime=now();
+    //Get the time elapsed
     newTime= millis();
     elapseTime= newTime-oldTime;
+    //number of revs since last request
+    sendrev=rev-sendrev;
+    //get the request number (maybe deprecated?)
     counter++;
-    //oldTime=now();
+    //reset time counter
     oldTime=millis();
     Serial.print("Time since last request:  ");
     Serial.println(elapseTime);
     Serial.print("Request number: ");
     Serial.println(counter);
+    Serial.print("Number of Revs since last request: ");
+    Serial.println(sendrev);
+    Serial.print("Total revs: ");
+    Serial.println(rev);
     delay(500);
   }
   request=false; //reset request to false
