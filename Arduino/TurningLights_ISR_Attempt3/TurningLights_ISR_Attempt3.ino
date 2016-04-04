@@ -37,10 +37,12 @@ void loop() {
   Serial.println(buttonStateLeft);
   Serial.println(buttonStateRight);
   if (buttonPushedLeft == true){
+    Serial.println("left");
     blink_left();
     }else {digitalWrite(LED_Left,LOW);}
   if (buttonPushedRight == true){
     blink_right();
+    Serial.println("right");
     }else {digitalWrite(LED_Right, LOW);}
   }
 /////////////////////////////////////////////////

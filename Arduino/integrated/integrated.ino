@@ -18,10 +18,10 @@ char INBYTE;
 unsigned long oldTime = millis();
 unsigned long newTime= millis();
 unsigned long elapseTime;
-int sendrev=0;
+long sendrev=0;
 //////Hall Effect Sensor///////
-int rev;
-int old_rev;
+long rev;
+long old_rev;
 int rpm;
 volatile int old_time; // in order to store the time value of the current state, to be used in next state
 int perimeter;// pi*diameter
@@ -38,12 +38,12 @@ void setup() {
   //attach interrupt
   attachPinChangeInterrupt(0,ISR_left,RISING);
   attachPinChangeInterrupt(23,ISR_right,RISING);
-  //////////////////
+  //////////////////11
   //Bluetooth//
 
   //////////////////
   //Hall Sensor//
-  attachInterrupt (0, magnet_detected, RISING);
+  attachPinChangeInterrupt (18, magnet_detected, RISING);
   old_time = 0;
   perimeter = 0;
   diameter = 20;
@@ -67,8 +67,8 @@ void loop() {
   ////////////////////TURNING LIGHTS/////////////////////
   int buttonStateLeft = digitalRead(PB_Left_int);
   int buttonStateRight= digitalRead(PB_Right_int);
-  Serial.println(buttonStateLeft);
-  Serial.println(buttonStateRight);
+  //Serial.println(buttonStateLeft);
+  //Serial.println(buttonStateRight);
   if (buttonPushedLeft == true){
     blink_left();
     }else {digitalWrite(LED_Left,LOW);}
@@ -83,18 +83,18 @@ void loop() {
 
 //////////////////////////TURNING LIGHTS////////////////////////////////////////
 void ISR_left(){
-  Serial.println("enters ISR_Left");
+  //Serial.println("enters ISR_Left");
   buttonPushedLeft = !buttonPushedLeft;
   
   }
  void ISR_right(){
-  Serial.println("enters ISR_right");
+  //Serial.println("enters ISR_right");
   buttonPushedRight = !buttonPushedRight;
   }
 ///////////////////////////////////////////////////
 void blink_left(){
       // blinking loop
-        Serial.println("enters LEFT");
+        //Serial.println("enters LEFT");
         digitalWrite (LED_Left, LOW);
         delay (500);
         digitalWrite (LED_Left, HIGH);
@@ -102,7 +102,7 @@ void blink_left(){
 }
 void blink_right(){      
       // blinking loop
-        Serial.println("enters RIGHT");
+        //Serial.println("enters RIGHT");
         digitalWrite (LED_Right, LOW);
         delay (500);
         digitalWrite (LED_Right, HIGH);
@@ -111,8 +111,8 @@ void blink_right(){
 ////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////BLUETOOTH/////////////////////////////////////////
 bool msgReq() {
-  Serial.println("Press 1 to request Arduino data");
-  while(!Serial.available());
+//  Serial.println("Press 1 to request Arduino data");
+//  while(!Serial.available());
   INBYTE = Serial.read();
   if (INBYTE == '1') {
     digitalWrite(LED, LOW);
