@@ -24,8 +24,6 @@ int wait;
 long rev;
 long old_rev;
 volatile int old_time; // in order to store the time value of the current state, to be used in next state
-int perimeter;// pi*diameter
-int diameter; // diameter of the tire
 ///////////////////////////////end of variables
 void setup() {
   //Turning Lights//
@@ -49,8 +47,6 @@ void setup() {
   //Hall Sensor//
   attachPinChangeInterrupt (18, magnet_detected, RISING);
   old_time = 0;
-  perimeter = 0;
-  diameter = 20;
   old_rev = 0;
   rev = 0;
   //////////////////
@@ -64,7 +60,6 @@ void loop() {
   ///////////////////////////////////////////////////////
   ///////////////////BLUETOOTH///////////////////////////
   request = msgReq();
-  //conn=request;
   msgSend(request);
   ///////////////////////////////////////////////////////
   ////////////////////TURNING LIGHTS/////////////////////
@@ -128,20 +123,9 @@ void msgSend(bool request) {
     //reset time counter
     oldTime=millis();
     //send data
-  //  Serial.print("Time  ");
     Serial.println(elapseTime);
-  //  Serial.print("Revs ");
     Serial.println(sendrev);
- //   Serial.print("total ");
-  //  Serial.println(rev);
     }
-//  if(!conn){
-//    wait++;
-//    Serial.println(wait);
-//    if (wait==10){
-//      wait=0;
-//    }
-//   }
   
   request=false; //reset request to false
 }
@@ -149,7 +133,6 @@ void msgSend(bool request) {
 /////////////////////////////HALL SENSOR////////////////////////////////////////
 void magnet_detected(){
   rev++;
- // Serial.println(rev);
   }
 ////////////////////////////////////////////////////////////////////////////////
 
