@@ -15,8 +15,10 @@ char INBYTE;
 unsigned long oldTime = millis();
 unsigned long newTime= millis();
 unsigned long elapseTime;
-long sendrev=0;
-bool request=false;
+long sendrev;
+bool request;
+bool conn;
+int wait;
 //////Hall Effect Sensor///////
 long rev;
 long old_rev;
@@ -37,10 +39,13 @@ void setup() {
   attachPinChangeInterrupt(23,ISR_right,RISING);
   //////////////////
   //Bluetooth//
-  //no Setup needed
+  long sendrev=0;
+  bool request=false;
+  bool conn=false;
+  int wait=0;
   //////////////////
   //Hall Sensor//
-  attachPinChangeInterrupt (19, magnet_detected, RISING);
+  attachPinChangeInterrupt (18, magnet_detected, RISING);
   old_time = 0;
   perimeter = 0;
   diameter = 20;
@@ -57,6 +62,7 @@ void loop() {
   ///////////////////////////////////////////////////////
   ///////////////////BLUETOOTH///////////////////////////
   request = msgReq();
+  //conn=request;
   msgSend(request);
   ///////////////////////////////////////////////////////
   ////////////////////TURNING LIGHTS/////////////////////
@@ -123,13 +129,24 @@ void msgSend(bool request) {
     Serial.println(elapseTime);
     Serial.print("Revs ");
     Serial.println(sendrev);
-  }
+    Serial.print("total ");
+    Serial.println(rev);
+    }
+//  if(!conn){
+//    wait++;
+//    Serial.println(wait);
+//    if (wait==10){
+//      wait=0;
+//    }
+//   }
+  
   request=false; //reset request to false
 }
 ////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////HALL SENSOR////////////////////////////////////////
 void magnet_detected(){
   rev++;
+  Serial.println(rev);
   }
 ////////////////////////////////////////////////////////////////////////////////
 
