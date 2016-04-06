@@ -11,13 +11,12 @@ int PB_Right_int= 7;
 boolean buttonPushedLeft = false;
 boolean buttonPushedRight = false;
 ////////Bluetooth///////////
-int counter = 0;
-int LED = 11;
 char INBYTE;
 unsigned long oldTime = millis();
 unsigned long newTime= millis();
 unsigned long elapseTime;
 long sendrev=0;
+bool request=false;
 //////Hall Effect Sensor///////
 long rev;
 long old_rev;
@@ -41,7 +40,7 @@ void setup() {
   //no Setup needed
   //////////////////
   //Hall Sensor//
-  attachPinChangeInterrupt (18, magnet_detected, RISING);
+  attachPinChangeInterrupt (19, magnet_detected, RISING);
   old_time = 0;
   perimeter = 0;
   diameter = 20;
@@ -57,7 +56,6 @@ void loop() {
  }
   ///////////////////////////////////////////////////////
   ///////////////////BLUETOOTH///////////////////////////
-  bool request;
   request = msgReq();
   msgSend(request);
   ///////////////////////////////////////////////////////
@@ -118,19 +116,13 @@ void msgSend(bool request) {
     elapseTime= newTime-oldTime;
     //number of revs since last request
     sendrev=rev-sendrev;
-    //get the request number (maybe deprecated?)
-    counter++;
     //reset time counter
     oldTime=millis();
     //send data
-    Serial.print("Time since last request:  ");
+    Serial.print("Time  ");
     Serial.println(elapseTime);
-    Serial.print("Request number: ");
-    Serial.println(counter);
-    Serial.print("Number of Revs since last request: ");
+    Serial.print("Revs ");
     Serial.println(sendrev);
-    Serial.print("Total revs: ");
-    Serial.println(rev);
   }
   request=false; //reset request to false
 }
@@ -138,6 +130,6 @@ void msgSend(bool request) {
 /////////////////////////////HALL SENSOR////////////////////////////////////////
 void magnet_detected(){
   rev++;
-  Serial.println(rev);    
   }
 ////////////////////////////////////////////////////////////////////////////////
+
