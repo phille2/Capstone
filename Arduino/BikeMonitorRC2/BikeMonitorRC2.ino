@@ -16,6 +16,7 @@ unsigned long oldTime = millis();
 unsigned long newTime= millis();
 unsigned long elapseTime;
 long sendrev;
+long prevrev;
 bool request;
 bool conn;
 int wait;
@@ -40,6 +41,7 @@ void setup() {
   //////////////////
   //Bluetooth//
   long sendrev=0;
+  long prevrev=0;
   bool request=false;
   bool conn=false;
   int wait=0;
@@ -121,7 +123,8 @@ void msgSend(bool request) {
     newTime= millis();
     elapseTime= newTime-oldTime;
     //number of revs since last request
-    sendrev=rev-sendrev;
+    sendrev=rev-prevrev;
+    prevrev=rev;
     //reset time counter
     oldTime=millis();
     //send data
